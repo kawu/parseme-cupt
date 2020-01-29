@@ -1,7 +1,6 @@
 from typing import Union, NamedTuple, FrozenSet, Dict, Optional
 from collections import OrderedDict
 
-# import conllu
 from conllu import TokenList
 
 
@@ -24,7 +23,7 @@ class MWE(NamedTuple):
     toks: FrozenSet[TokID]
 
 
-def join_mwes(x: MWE, y: MWE) -> MWE:
+def _join_mwes(x: MWE, y: MWE) -> MWE:
     """Join two MWEs into one.
 
     This requires that both input MWEs have the same category.
@@ -38,17 +37,17 @@ def join_mwes(x: MWE, y: MWE) -> MWE:
         return MWE(cat, x.toks.union(y.toks))
 
 
-def update_dict_with(d: Dict[MweID, MWE], new: Dict[MweID, MWE]):
+def _update_dict_with(d: Dict[MweID, MWE], new: Dict[MweID, MWE]):
     """Update the first dictionary with MWEs from the second dictionary."""
     for ix in new.keys():
         if ix in d:
-            mwe = join_mwes(d[ix], new[ix])
+            mwe = _join_mwes(d[ix], new[ix])
         else:
             mwe = new[ix]
         d[ix] = mwe
 
 
-def mwes_in_tok(tok: OrderedDict) -> Dict[MweID, MWE]:
+def _mwes_in_tok(tok: OrderedDict) -> Dict[MweID, MWE]:
     """Extract MWE fragments annotated for the given token."""
     mwe_anno = tok["parseme:mwe"]
     if mwe_anno == '*' or mwe_anno == '_':
@@ -70,6 +69,6 @@ def retrieve_mwes(sent: TokenList) -> Dict[MweID, MWE]:
     """Retrieve MWEs from the given sentence."""
     result = dict()     # type: Dict[MweID, MWE]
     for tok in sent:
-        tok_mwes = mwes_in_tok(tok)
-        update_dict_with(result, tok_mwes)
+        tok_mwes = _mwes_in_tok(tok)
+        _update_dict_with(result, tok_mwes)
     return result
