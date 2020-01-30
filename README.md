@@ -1,6 +1,7 @@
 # Python CUPT parser
 
-This repository provides a Python parser for the [CUPT format][cupt].
+This repository provides a Python parser for the [CUPT format][cupt].  It's in
+an early stage of development, expect substantial changes!
 
 # Installation
 
