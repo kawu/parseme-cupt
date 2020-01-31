@@ -86,7 +86,7 @@ def clear_mwes(sent: TokenList, value=MWE_NONE):
         tok[MWE_FIELD] = value
 
 
-def unsafe_add_mwe(sent: TokenList, mwe_id: MweID, mwe: MWE):
+def add_mwe(sent: TokenList, mwe_id: MweID, mwe: MWE):
     """Add the MWE with the given ID to the given sentence.
 
     The function does not check if a MWE with the given ID already
@@ -128,5 +128,5 @@ def replace_mwes(sent: TokenList, mwes: Set[MWE]):
     clear_mwes(sent)
     mwe_id = 1
     for mwe in mwes:
-        unsafe_add_mwe(sent, mwe_id, mwe)
+        add_mwe(sent, mwe_id, mwe)
         mwe_id += 1
