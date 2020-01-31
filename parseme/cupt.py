@@ -26,7 +26,7 @@ MweCat = str
 class MWE(NamedTuple):
     """MWE annotation"""
     cat: Optional[MweCat]
-    toks: Set[TokID]
+    span: Set[TokID]
 
 
 def _join_mwes(x: MWE, y: MWE) -> MWE:
@@ -40,7 +40,7 @@ def _join_mwes(x: MWE, y: MWE) -> MWE:
         raise Exception("cannot join MWEs with different categories")
     else:
         cat = x.cat or y.cat
-        return MWE(cat, x.toks.union(y.toks))
+        return MWE(cat, x.span.union(y.span))
 
 
 def _update_dict_with(d: Dict[MweID, MWE], new: Dict[MweID, MWE]):
@@ -60,14 +60,14 @@ def _mwes_in_tok(tok: OrderedDict) -> Dict[MweID, MWE]:
         return dict()
     else:
         result = dict()
-        tok_ids = set([tok["id"]])
+        span = set([tok["id"]])
         for mwe_raw in mwe_anno.split(';'):
             mwe_info = mwe_raw.split(':')
             if len(mwe_info) == 2:
                 (ix, cat) = mwe_info
             else:
                 (ix,), cat = mwe_info, None
-            result[int(ix)] = MWE(cat, tok_ids)
+            result[int(ix)] = MWE(cat, span)
         return result
 
 
@@ -94,11 +94,11 @@ def add_mwe(sent: TokenList, mwe_id: MweID, mwe: MWE):
     set of tokens already exists in the sentence.  Use with caution.
     """
     # Retrieve the list of tokens as a sorted list
-    tok_ids = sorted(mwe.toks)
+    span = sorted(mwe.span)
 
     # Check some invariants, just in case
-    assert len(tok_ids) >= 1
-    assert tok_ids[0] == min(tok_ids)
+    assert len(span) >= 1
+    assert span[0] == min(span)
 
     # Create a dictionary from token IDs to actual tokens
     tok_map = {}
@@ -118,11 +118,11 @@ def add_mwe(sent: TokenList, mwe_id: MweID, mwe: MWE):
         mwe_str = ":".join([str(mwe_id), mwe.cat])
     else:
         mwe_str = str(mwe_id)
-    update(tok_ids[0], mwe_str)
+    update(span[0], mwe_str)
 
     # Update the remaining MWE component tokens
     mwe_str = str(mwe_id)
-    for tok_id in tok_ids[1:]:
+    for tok_id in span[1:]:
         update(tok_id, mwe_str)
 
 
