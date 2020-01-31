@@ -70,8 +70,8 @@ One way to add new MWE annotations is using `add_mwe`:
 {1: MWE(cat='VPC.full', span=set({6, 7}))}
 ```
 
-A safer alternative, which in particular automatically deals with MWE
-identifiers, is to add all target MWEs at once using `replace_mwes`:
+An alternative, which automatically deals with MWE identifiers, is to add all
+target MWEs at once using `replace_mwes`:
 ```python
 >>> mwe1 = MWE('VPC.full', set([6, 7]))
 >>> mwe2 = MWE('VID', set([10, 12]))
@@ -83,7 +83,7 @@ identifiers, is to add all target MWEs at once using `replace_mwes`:
 To convert the sentence back to the .cupt format, use `serialize` provided by
 the [conllu][conllu] library:
 ```python
->>> sentence.serialize()
+>>> print(sentence.serialize(), end='')
 # global.columns = ID FORM LEMMA UPOS XPOS FEATS HEAD DEPREL DEPS MISC PARSEME:MWE
 # source_sent_id = . . 4045
 # text = Worse yet, what is going on will not let us alone.
