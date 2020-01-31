@@ -1,4 +1,4 @@
-from typing import Union, NamedTuple, FrozenSet, Dict, Optional, Set
+from typing import Union, NamedTuple, Dict, Set, Iterable, Optional
 from collections import OrderedDict
 
 from conllu import TokenList
@@ -26,7 +26,7 @@ MweCat = str
 class MWE(NamedTuple):
     """MWE annotation"""
     cat: Optional[MweCat]
-    toks: FrozenSet[TokID]
+    toks: Set[TokID]
 
 
 def _join_mwes(x: MWE, y: MWE) -> MWE:
@@ -60,7 +60,7 @@ def _mwes_in_tok(tok: OrderedDict) -> Dict[MweID, MWE]:
         return dict()
     else:
         result = dict()
-        tok_ids = frozenset([tok["id"]])
+        tok_ids = set([tok["id"]])
         for mwe_raw in mwe_anno.split(';'):
             mwe_info = mwe_raw.split(':')
             if len(mwe_info) == 2:
@@ -114,7 +114,10 @@ def add_mwe(sent: TokenList, mwe_id: MweID, mwe: MWE):
             tok[MWE_FIELD] += ";" + mwe_str
 
     # Update the first MWE component token
-    mwe_str = ":".join([str(mwe_id), mwe.cat])
+    if mwe.cat:
+        mwe_str = ":".join([str(mwe_id), mwe.cat])
+    else:
+        mwe_str = str(mwe_id)
     update(tok_ids[0], mwe_str)
 
     # Update the remaining MWE component tokens
@@ -123,7 +126,7 @@ def add_mwe(sent: TokenList, mwe_id: MweID, mwe: MWE):
         update(tok_id, mwe_str)
 
 
-def replace_mwes(sent: TokenList, mwes: Set[MWE]):
+def replace_mwes(sent: TokenList, mwes: Iterable[MWE]):
     """Replace the MWE annotations in the sentence with new MWEs."""
     clear_mwes(sent)
     mwe_id = 1

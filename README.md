@@ -49,7 +49,7 @@ using `retrieve_mwes`:
 >>> import parseme.cupt as cupt
 >>>
 >>> print(cupt.retrieve_mwes(sentence))
-{2: MWE(cat='VPC.full', toks=frozenset({6, 7})), 1: MWE(cat='VID', toks=frozenset({10, 12}))}
+{2: MWE(cat='VPC.full', toks=set({6, 7})), 1: MWE(cat='VID', toks=set({10, 12}))}
 ```
 
 ### Update
@@ -65,19 +65,19 @@ One way to add new MWE annotations is using `add_mwe`:
 ```python
 >>> from parseme.cupt import MWE
 >>>
->>> cupt.add_mwe(sentence, mwe_id=1, mwe=MWE('VPC.full', frozenset([6, 7])))
+>>> cupt.add_mwe(sentence, mwe_id=1, mwe=MWE('VPC.full', set([6, 7])))
 >>> print(cupt.retrieve_mwes(sentence))
-{1: MWE(cat='VPC.full', toks=frozenset({6, 7}))}
+{1: MWE(cat='VPC.full', toks=set({6, 7}))}
 ```
 
 A safer alternative, which in particular automatically deals with MWE
 identifiers, is to add all target MWEs at once using `replace_mwes`:
 ```python
->>> mwe1 = MWE('VPC.full', frozenset([6, 7]))
->>> mwe2 = MWE('VID', frozenset([10, 12]))
->>> cupt.replace_mwes(sentence, set([mwe1, mwe2]))
+>>> mwe1 = MWE('VPC.full', set([6, 7]))
+>>> mwe2 = MWE('VID', set([10, 12]))
+>>> cupt.replace_mwes(sentence, [mwe1, mwe2])
 >>> print(cupt.retrieve_mwes(sentence))
-{1: MWE(cat='VPC.full', toks=frozenset({6, 7})), 2: MWE(cat='VID', toks=frozenset({10, 12}))}
+{1: MWE(cat='VPC.full', toks=set({6, 7})), 2: MWE(cat='VID', toks=set({10, 12}))}
 ```
 
 To convert the sentence back to the .cupt format, use `serialize` provided by
