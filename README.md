@@ -83,7 +83,7 @@ identifiers, is to add all target MWEs at once using `replace_mwes`:
 To convert the sentence back to the .cupt format, use `serialize` provided by
 the [conllu][conllu] library:
 ```python
->>> print(sentence.serialize(), end='')
+>>> sentence.serialize()
 # global.columns = ID FORM LEMMA UPOS XPOS FEATS HEAD DEPREL DEPS MISC PARSEME:MWE
 # source_sent_id = . . 4045
 # text = Worse yet, what is going on will not let us alone.
