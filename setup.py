@@ -16,6 +16,6 @@ setup(
     author=u'Jakub Waszczuk',
     author_email='waszczuk.kuba@gmail.com',
     url='https://github.com/kawu/parseme-cupt',
-    install_requires=['conllu>=2.2.1'],
+    install_requires=['conllu>=2.2.2'],
     keywords=['parseme', 'cupt', 'nlp'],
 )
