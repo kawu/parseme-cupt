@@ -3,6 +3,10 @@
 This repository provides a Python parser for the [CUPT format][cupt].  It's in
 an early stage of development, expect substantial changes!
 
+# Requirements
+
+The parser requires Python in version 3.6 or higher.
+
 # Installation
 
 Using `pip`:
