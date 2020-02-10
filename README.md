@@ -1,4 +1,4 @@
-**The repository has moved to https://gitlab.com/parseme/corpora/-/wikis/PARSEME-tools#python-cupt-parser.**
+**The repository has moved to https://gitlab.com/parseme/cupt-parser.**
 
 # Python CUPT parser
 
