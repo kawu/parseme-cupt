@@ -1,4 +1,4 @@
-**The repository has moved to https://gitlab.com/parseme/cupt-parser.**
+**The parser moved to a new repository: https://gitlab.com/parseme/cupt-parser.**
 
 # Python CUPT parser
 
