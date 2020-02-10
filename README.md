@@ -1,3 +1,5 @@
+**The repository has moved to https://gitlab.com/parseme/corpora/-/wikis/PARSEME-tools#python-cupt-parser.**
+
 # Python CUPT parser
 
 This repository provides a Python parser for the [CUPT format][cupt].  It's in
